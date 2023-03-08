@@ -1,10 +1,17 @@
 import "../App.css"
+import { useNavigate } from "react-router-dom";
 
 const WelcomePage = () => {
+  const navigate = useNavigate();
+
+  function handleClick(e) {
+    navigate("/NamePage");
+  }
+
   return ( 
     <div className="App">
       <h1>Welcome to Tic Tac Toe</h1>
-      <button>Start</button>
+      <button onClick={handleClick}>Start</button>
     </div>
   )
 }
