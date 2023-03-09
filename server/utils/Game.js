@@ -6,6 +6,10 @@ class Game {
         this.gameID = gameID;
         this.board = new Board(); 
     }
+
+    addPlayerTwo = (playerTwo) => {
+        this.players.push(playerTwo);
+    }
 }
 
 module.exports = Game;

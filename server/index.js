@@ -27,17 +27,21 @@ const gameManager = new GameManager();
 socketIo.on('connection', (socket) => {
     console.log(`User connected ${socket.id}`);
 
-    // Socket event listeners 
-    socket.on('hello from client', (msg) => {
-        console.log(msg);
-    })
-
     socket.on("createNewGame", (playerName) => {
         var gameID = gameManager.createNewGame(playerName);
-        console.log(gameID);
-        console.log(socket.id);
+        socket.join(gameID);
         socketIo.to(socket.id).emit("newGameCreated", {gameID: gameID});
     });
+
+    socket.on("joinGame", (playerName, gameID) => {
+        const gameJoined = gameManager.joinGame(playerName, gameID);
+        if (gameJoined) {
+            socket.join(gameID);
+            socketIo.in(gameID).emit("gameStart"); 
+        } else {
+            socketIo.to(socket.id).emit("joinError");
+        }
+    })
 
     socket.on("connect_error", (err) => {
         console.log(`connect_error due to ${err.message}`);

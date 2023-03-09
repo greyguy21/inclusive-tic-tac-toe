@@ -1,5 +1,5 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 import io from "socket.io-client";
 
 const ENDPOINT = 'http://localhost:4000/';
@@ -30,10 +30,8 @@ class ChoicePageComponent extends React.Component {
 
         this.socket = io(ENDPOINT);
     }
-
+    
     handleCreateGame() {
-        console.log(this.state.playerName);
-        console.log(this.socket.id);
         this.socket.emit("createNewGame", {playerName: this.state.playerName});
         this.socket.on("newGameCreated", (
             (gameID) => {
@@ -46,26 +44,22 @@ class ChoicePageComponent extends React.Component {
         ));
     }
 
-    // handleJoinGame() {
-    //     this.socket.emit("joinGame", {playerName: this.state.playerName});
-    //     this.socket.on("gameJoined", (
-    //         (gameID) => {
-    //             this.setState({
-    //                 gameID: gameID, 
-    //                 choice: 2
-    //             })
-    //         }
-    //     ));
-    // }
+    handleJoinGame() {
+        this.setState({choice : 2})
+    }
     
     render() {
         switch(this.state.choice){
             case(1): 
-                // New game created 
-                console.log(this.state.gameID);
+                // New game created -> go to loading page 
+                return (
+                    <Navigate to="/LoadingPage" state={{socket: this.socket, playerName: this.state.playerName, gameID: this.state.gameID}}></Navigate>
+                )
+            case(2): 
+                // join game
                 return (
                     <div>
-                        <h1>newGameCreated: {this.state.playerName} {this.state.gameID}</h1>
+                        <h1>joinGame: {this.state.playerName}</h1>
                     </div>
                 )
             case(0):
