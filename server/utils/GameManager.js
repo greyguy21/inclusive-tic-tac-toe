@@ -17,6 +17,7 @@ class GameManager {
     }
 
     createNewGame = (playerName) => {
+        console.log(playerName);
         const gameID = this.generateGameID();
         const playerOne = new Player(playerName, gameID);
         const game = new Game(playerOne, gameID);
@@ -24,17 +25,20 @@ class GameManager {
         return gameID;
     }
 
-    // joinGame = (playerName, gameID) => {
-    //     const canJoin = this.gamesWaiting.has(gameID);
-    //     if (canJoin) {
-    //         const game = this.gamesWaiting.get(gameID);
-    //         const playerTwo = new Player(playerTwo, gameID); 
-    //         game.addPlayerTwo(playerTwo);
-    //         return true; 
-    //     } else {
-    //         return false; 
-    //     }
-    // }
+    joinGame = (playerName, gameID) => {
+        console.log(this.gamesWaiting);
+        console.log(gameID);
+        const canJoin = this.gamesWaiting.has(gameID);
+        console.log(canJoin);
+        if (canJoin) {
+            const game = this.gamesWaiting.get(gameID);
+            const playerTwo = new Player(playerName, gameID); 
+            game.addPlayerTwo(playerTwo);
+            return true; 
+        } else {
+            return false; 
+        }
+    }
 
 }
 

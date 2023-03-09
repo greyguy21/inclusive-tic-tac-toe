@@ -31,11 +31,14 @@ class ChoicePageComponent extends React.Component {
         this.socket = io(ENDPOINT);
     }
     
+    componentWillUnmount() {
+        this.socket.disconnect(); 
+    }
+
     handleCreateGame() {
         this.socket.emit("createNewGame", {playerName: this.state.playerName});
         this.socket.on("newGameCreated", (
             (gameID) => {
-                console.log("???");
                 this.setState({
                     gameID: gameID.gameID, 
                     choice: 1
@@ -51,19 +54,14 @@ class ChoicePageComponent extends React.Component {
     render() {
         switch(this.state.choice){
             case(1): 
-                // New game created -> go to loading page 
                 return (
-                    <Navigate to="/LoadingPage" state={{socket: this.socket, playerName: this.state.playerName, gameID: this.state.gameID}}></Navigate>
+                    <Navigate to="/LoadingPage" state={{gameID: this.state.gameID}}></Navigate>
                 )
             case(2): 
-                // join game
                 return (
-                    <div>
-                        <h1>joinGame: {this.state.playerName}</h1>
-                    </div>
+                    <Navigate to="/JoinPage" state={{playerName: this.state.playerName}}></Navigate>
                 )
             case(0):
-                // Would you like to 
                 return (
                     <div className="App">
                         <h1>hi {this.state.playerName}</h1>
@@ -72,7 +70,7 @@ class ChoicePageComponent extends React.Component {
                        <div>
                             <button type="submit" onClick={this.handleCreateGame.bind(this)}>Create A New Game</button>
                             <br></br>
-                            <button type="submit">Join A Game</button>
+                            <button type="submit" onClick={this.handleJoinGame.bind(this)}>Join A Game</button>
                        </div>
                     </div>
                 )  
