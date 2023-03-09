@@ -21,7 +21,7 @@ const NamePage = () => {
     }
 
     const handleOnSubmit = (e) => {
-        navigate("/SessionPage", {state: {playerName: playerName}});
+        navigate("/ChoicePage", {state: {playerName: playerName}});
         e.preventDefault();
     }
 

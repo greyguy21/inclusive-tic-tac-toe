@@ -1,7 +1,7 @@
 import "./App.css"
 import WelcomePage from "./pages/WelcomePage";
 import NamePage from "./pages/NamePage";
-import SessionPage from "./pages/SessionPage";
+import ChoicePage from "./pages/ChoicePage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 const App = () => {
@@ -10,7 +10,7 @@ const App = () => {
     <Routes>
       <Route path="/" element={<WelcomePage/>}/>
       <Route path="/NamePage" element={<NamePage/>}/>
-      <Route path="/SessionPage" element={<SessionPage/>}/>
+      <Route path="/ChoicePage" element={<ChoicePage/>}/>
     </Routes>
   </BrowserRouter>
   )
