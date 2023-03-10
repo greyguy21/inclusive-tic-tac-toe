@@ -10,8 +10,6 @@ const GamePage = () => {
     return (
         <div>
             <Board aria-label="game board" gameID={gameID} playerName={playerName}></Board>
-            {/* Leave Game*/}
-            {/* Play Again */}
         </div>
     )
 }
