@@ -1,4 +1,4 @@
-// import { useLocation } from "react-router-dom";
+import { useState } from "react";
 import io from "socket.io-client";
 
 const ENDPOINT = 'http://localhost:4000/';
@@ -6,52 +6,46 @@ const ENDPOINT = 'http://localhost:4000/';
 const ViewPage = () => {
     // const location = useLocation(); 
     // const playerName = location.state.playerName; 
+    const [games, setGames] = useState([]); 
 
     const socket = io(ENDPOINT);
 
     socket.emit("getResults"); 
-    
-    let games; 
-    socket.on("results", ({results}) => {
-        console.log(results); 
+
+    socket.on("resu;ts", (results) => {
+        setGames(results);
     })
     console.log(games);
-
-    const createViewTile = (game) => {
-        if (game.draw) {
-            return (
-                <div>
-                    <h2>Draw</h2>
-                    <label>{game.playerPiece}: {game.playerName}</label>
-                    <label>{game.opponentPiece}: {game.opponentName}</label>
-                    <label>Final Board: {game.board}</label>
-                    <label>Moves: {game.moves}</label>
-                </div>
-            )
-        } else {
-            return (
-                <div>
-                    <h2>Winner: {game.winner}</h2>
-                    <label>{game.playerPiece}: {game.playerName}</label>
-                    <label>{game.opponentPiece}: {game.opponentName}</label>
-                    <label>Final Board: {game.board}</label>
-                    <label>Moves: {game.moves}</label>
-                </div>
-            )
-        }
-    }
-    
-    let viewTileArray = [];
-    for (let i = 0; i < this.games; i++) {
-        const game = games.get(i);
-        const newViewTile = createViewTile(game);
-        viewTileArray.push(newViewTile);
-    }
 
     return (
         <div>
             <h1>Past Games</h1>
-            <div>{viewTileArray}</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Outcome</th>
+                        <th>Players Details</th>
+                        <th>Board</th>
+                        <th>Moves</th>
+                        <th>Winner</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {games && games.map((g, index) => {
+                       return (
+                        <tr key={index}>
+                            {g[8] ? <td>Draw</td> : <td>Win</td>}
+                            <td>{g[4]}: {g[3]} 
+                                {g[6]}: {g[5]}
+                            </td>
+                            <td>{g[1]}</td>
+                            <td>{g[2]}</td>
+                            <td>{g[7]}</td>
+                        </tr>
+                       )
+                    })}
+                </tbody>
+            </table>
         </div>
     );
 }

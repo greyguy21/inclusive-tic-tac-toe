@@ -48,9 +48,13 @@ class ChoicePageComponent extends React.Component {
     }
 
     handleJoinGame() {
-        this.setState({choice : 2})
+        this.setState({choice: 2})
     }
     
+    handleView() {
+        this.setState({choice: 3})
+    }
+
     render() {
         switch(this.state.choice){
             case(1): 
@@ -60,6 +64,10 @@ class ChoicePageComponent extends React.Component {
             case(2): 
                 return (
                     <Navigate to="/JoinPage" state={{playerName: this.state.playerName}}></Navigate>
+                )
+            case(3):
+                return (
+                    <Navigate to="/ViewPage" state={{playerName: this.state.playerName}}></Navigate>
                 )
             case(0):
                 return (
@@ -71,6 +79,8 @@ class ChoicePageComponent extends React.Component {
                             <button type="submit" onClick={this.handleCreateGame.bind(this)}>Create A New Game</button>
                             <br></br>
                             <button type="submit" onClick={this.handleJoinGame.bind(this)}>Join A Game</button>
+                            <br></br>
+                            <button type="submit" onClick={this.handleView.bind(this)}>View Past Games</button>
                        </div>
                     </div>
                 )  

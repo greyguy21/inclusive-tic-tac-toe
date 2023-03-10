@@ -6,7 +6,7 @@ class GameManager {
     gamesWaiting = new Map(); 
     gamesInProgress = new Map();
     gamesEnded = new Map();
-    results = new Map();
+    results = new Array();
 
     generateGameID = () => {
         var gameIDExists = true; 
@@ -81,11 +81,10 @@ class GameManager {
     handleResults = (playerName, piece, gameID, game, winner, draw) => {
         const opponentPlayer = game.playerNames.get(playerName);
         const opponentPiece = piece == "X" ? "O" : "X"; 
-        const board = game.board; 
+        const board = game.board.state; 
         const moves = game.board.moves; 
         
-        const index = this.results.size;
-        this.results.set(index, {gameID, board, moves, playerName, piece, opponentPlayer, opponentPiece, winner, draw});
+        this.results.push([gameID, board, moves, playerName, piece, opponentPlayer, opponentPiece, winner, draw]);
         console.log(this.results);
     }
 
@@ -99,6 +98,10 @@ class GameManager {
         const newBoard = game.board.state; 
         const next = "X";
         return {newBoard, next};
+    }
+
+    getResults = () => {
+        return this.results;
     }
 
 }

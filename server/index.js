@@ -100,6 +100,12 @@ socketIo.on('connection', (socket) => {
         socketIo.in(gameID).emit("gameReset", values);
     })
 
+    socket.on("getResults", () => {
+        const results = gameManager.getResults();
+        console.log(results);
+        socketIo.to(socket.id).emit("resu;ts", results);
+    })
+
     socket.on("connect_error", (err) => {
         console.log(`connect_error due to ${err.message}`);
     })
