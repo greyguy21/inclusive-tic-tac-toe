@@ -56,12 +56,22 @@ class GameManager {
 
     move = (playerName, gameID, index, piece) => {
         const game = this.gamesInProgress.get(gameID);
-        const player = game.players.get(playerName);
-
         const values = game.board.update(index, piece);
-        console.log(values);
         return values; 
     }
+
+    checkStatus = (gameID, piece) => {
+        const game = this.gamesInProgress.get(gameID);
+
+        if (game.board.checkWin(piece)) {
+            return 0;
+        } else if (game.board.checkDraw()) {
+            console.log("??");
+            return 1; 
+        } else {
+            return 2; 
+        }
+    } 
 
 }
 

@@ -69,10 +69,25 @@ socketIo.on('connection', (socket) => {
         const piece = args.piece; 
         
         const values = gameManager.move(playerName, gameID, index, piece); 
+        const status = gameManager.checkStatus(gameID, piece);
 
-        console.log(values);
+        const newBoard = values.newBoard; 
+        console.log(newBoard);
+
         socket.join(gameID);
-        socketIo.in(gameID).emit("update", values);
+        switch(status) {
+            case(0):
+                console.log("???");
+                socketIo.to(socket.id).emit("won", {newBoard});
+                socket.to(gameID).emit("opponentWon", {newBoard});
+                break;
+            case(1):
+                socketIo.in(gameID).emit("draw", {newBoard});
+                break; 
+            case(2):
+                socketIo.in(gameID).emit("update", values);
+                break;
+        }
     })
 
     socket.on("connect_error", (err) => {

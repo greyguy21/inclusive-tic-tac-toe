@@ -14,9 +14,10 @@ class Board extends React.Component {
             turn: false,
             playerName: "",
             opponentName: "",
-            turnMessage: "",
+            message: "",
             gameID: "", 
             initialized: false, 
+            end: false, 
         }
     }
 
@@ -45,6 +46,22 @@ class Board extends React.Component {
             console.log("updated");
             this.handleUpdate(newBoard, next);
         });
+
+        this.socket.on("won", ({newBoard}) => {
+            console.log("you won");
+            console.log(newBoard); 
+            this.handleWin(newBoard);
+        })
+
+        this.socket.on("opponentWon", ({newBoard}) => {
+            console.log("try again next time"); 
+            this.handleOpponentWin(newBoard);
+        })
+
+        this.socket.on("draw", ({newBoard}) => {
+            console.log("draww"); 
+            this.handleDraw(newBoard); 
+        })
     }
 
     componentDidUpdate() {
@@ -87,7 +104,7 @@ class Board extends React.Component {
     setTurnMessage = () => {
         const msg = this.state.turn ? "Your Turn" : this.state.opponentName + "'s Turn"; 
         console.log(msg);
-        this.setState({turnMessage: msg}); 
+        this.setState({message: msg}); 
     }
 
     handleUpdate = (newBoard, next) => {
@@ -95,6 +112,25 @@ class Board extends React.Component {
         this.setBoard(newBoard); 
         console.log(next);
         this.setTurn(next);
+    }
+
+    handleWin = (newBoard) => {
+        this.setBoard(newBoard);
+        this.setState({message: "You Won"}); 
+        this.setState({end: true});
+    }
+
+    handleOpponentWin = (newBoard) => {
+        this.setBoard(newBoard);
+        const msg = this.state.opponentName + " Won";  
+        this.setState({message: msg});
+        this.setState({end: true});
+    }
+
+    handleDraw = (newBoard) => {
+        this.setBoard(newBoard); 
+        this.setState({message: "It's A Draw"});
+        this.setState({end: true});
     }
 
     handleClickSquare  = (index) => {
@@ -125,10 +161,11 @@ class Board extends React.Component {
             )
         } else {
             return (
+
                 <div className="Board">
                     {/*Board */}
-                    <h1>{this.state.turnMessage}</h1>
-                    <h3>Your Piece is {this.state.piece}</h3>
+                    <h1>{this.state.message}</h1>
+                    {!this.state.end ? <h3>Your Piece is {this.state.piece}</h3> : null}
                     <div className="Row">{/*Row */}
                         <Square index={0} value={this.state.board[0]} onClick={this.handleClickSquare.bind(this)}/>
                         <Square index={1} value={this.state.board[1]} onClick={this.handleClickSquare.bind(this)}/>
@@ -143,7 +180,7 @@ class Board extends React.Component {
                         <Square index={6} value={this.state.board[6]} onClick={this.handleClickSquare.bind(this)}/>
                         <Square index={7} value={this.state.board[7]} onClick={this.handleClickSquare.bind(this)}/>
                         <Square index={8} value={this.state.board[8]} onClick={this.handleClickSquare.bind(this)}/>
-                    </div>                
+                    </div>              
                 </div>
             )
         }
