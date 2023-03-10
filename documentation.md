@@ -220,6 +220,8 @@ Client receives an event to leave the game.
 # Bugs 
 1. When navigating to previous page from view page, users need to press the back button 2 times. 
 
+2. Browsers (sharing the same port) are unable to view results at the same time. 
+
 
 
 
