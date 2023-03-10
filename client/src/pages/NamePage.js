@@ -28,14 +28,14 @@ const NamePage = () => {
     return (
         <div className="App">
         <h1 id="enterName">Enter Your Name</h1>
-        <label>You change the name below to something you like.</label>
         <form onSubmit={handleOnSubmit}>
-            <input type="text" value={playerName} onChange={handleOnChange} aria-labelledby="enterName"></input>
+            <label className="text">You change the name below to something you like.</label>
+            <br></br>
+            <input className={`textBox`} type="text" value={playerName} onChange={handleOnChange} aria-labelledby="enterName"></input>
             <br></br>
             <br></br>
-            <label>Then, click Next to continue</label>
-            <br></br>
-            <button type="submit" aria-label="next button">Next</button>
+            <label className="text">Then, click Next to continue</label>
+            <button className="button" type="submit" aria-label="next button">Next</button>
         </form>
         </div>
     );  

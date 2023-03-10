@@ -11,7 +11,7 @@ const WelcomePage = () => {
   return ( 
     <div className="App">
       <h1>Welcome to Tic Tac Toe</h1>
-      <button onClick={handleClick} aria-label="start button">Start</button>
+      <button id="startButton" className="button" onClick={handleClick} aria-label="start button">Start</button>
     </div>
   )
 }

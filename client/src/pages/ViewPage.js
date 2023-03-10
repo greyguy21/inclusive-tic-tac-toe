@@ -27,7 +27,7 @@ const ViewPage = () => {
     }
 
     return (
-        <div >
+        <div className="App">
             <button aria-label="back button" onClick={goBack}>Back</button>
             <h1 id="pastGamesResults">Past Games</h1>
             {

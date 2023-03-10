@@ -57,9 +57,10 @@
 .Board {
   width: 500px;
   height: 500px;
-  border: 1px solid black;
   display: flex;
   flex-direction: column;
+  text-align: center;
+  margin: 0 auto;
 }
 
 .Row {
@@ -78,8 +79,46 @@
   place-items: center;
   display: grid;
   cursor: pointer;
+  font-size: xx-large;
+  background-color: white;
+  outline-color: blue;   
+  outline-width: thick;
 }
 
 .Square:hover {
   background-color: lightgray;
+}
+
+.textBox{
+  font-size: x-large;
+  border-radius: 4px;
+  outline-color: blue;   
+  outline-width: thick;
+  width: 100%;
+}
+
+.headers{
+  font-size: larger;
+}
+
+.button{
+  font-size: large;
+  width: 100%;
+  outline-color: blue;   
+  outline-width: 100;
+}
+
+#startButton {
+  width: 50% !important;
+}
+
+
+.text{
+  font-size: large;
+  font-weight: 500;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.gameButton {
+  width: 50%;
 }

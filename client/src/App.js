@@ -29,7 +29,7 @@ const App = () => {
 
   return ( 
    <div className={`${theme}`}>
-    <button onClick={toggleTheme}>Toggle Theme</button>
+    <button className="button" onClick={toggleTheme}>Toggle Theme</button>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<WelcomePage/>}/>
