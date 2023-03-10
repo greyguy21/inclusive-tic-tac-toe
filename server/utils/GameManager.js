@@ -49,7 +49,6 @@ class GameManager {
         
         const piece = player.piece; 
         const opponentName = game.playerNames.get(playerName);
-        console.log(opponentName);
 
         return {board, piece, next, opponentName}; 
     }
@@ -85,7 +84,6 @@ class GameManager {
         const moves = game.board.moves; 
         
         this.results.push([gameID, board, moves, playerName, piece, opponentPlayer, opponentPiece, winner, draw]);
-        console.log(this.results);
     }
 
     resetGame = (gameID) => {

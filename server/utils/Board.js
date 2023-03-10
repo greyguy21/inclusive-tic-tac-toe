@@ -14,7 +14,6 @@ class Board {
     }
 
     update = (index, piece) => {
-        console.log("updating");
         this.state[index] = piece; 
         this.moves.push(index); 
     

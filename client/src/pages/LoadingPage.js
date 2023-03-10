@@ -8,8 +8,6 @@ const LoadingPage = () => {
     const location = useLocation(); 
     const gameID = location.state.gameID; 
     const playerName = location.state.playerName;
-    console.log(gameID);
-    console.log(playerName);
 
     const socket = io(ENDPOINT);
     

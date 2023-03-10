@@ -29,11 +29,8 @@ class Board extends React.Component {
         this.setState({theme: theme});
 
         if (!this.state.initialized) {
-            console.log(this.props);
             const playerName = this.props.playerName; 
             const gameID = this.props.gameID; 
-            console.log(playerName); 
-            console.log(gameID);
 
             this.setState({playerName: playerName}); 
             this.setState({gameID: gameID});
@@ -41,29 +38,23 @@ class Board extends React.Component {
             // emit event to server that player has joined game room 
             this.socket.emit("startGame", {playerName, gameID}); 
             this.socket.on("gameStarted", ({board, piece, next, opponentName}) => {
-                console.log("initializing");
                 this.initializeGame(board, piece, next, opponentName);
             })
         }
 
         this.socket.on("update", ({newBoard, next}) => {
-            console.log("updated");
             this.handleUpdate(newBoard, next);
         });
 
         this.socket.on("won", ({newBoard}) => {
-            console.log("you won");
-            console.log(newBoard); 
             this.handleWin(newBoard);
         })
 
         this.socket.on("opponentWon", ({newBoard}) => {
-            console.log("try again next time"); 
             this.handleOpponentWin(newBoard);
         })
 
         this.socket.on("draw", ({newBoard}) => {
-            console.log("draww"); 
             this.handleDraw(newBoard); 
         })
 
@@ -72,14 +63,12 @@ class Board extends React.Component {
         })
 
         this.socket.on("left", () => {
-            console.log("LEFT");
             this.setState({leave: true});
         })
     }
 
     componentDidUpdate() {
         if (!this.state.turn) {
-            console.log("waiting");
             this.socket.emit("waiting", {gameID: this.state.gameID});
         }
     }
@@ -94,7 +83,6 @@ class Board extends React.Component {
     }
 
     startGame = (board, next) => {
-        console.log(this.state.piece);
         this.setBoard(board);
         this.setTurn(next);
         this.setState({initialized: true});
@@ -105,8 +93,6 @@ class Board extends React.Component {
     }
 
     setTurn = (next) => {
-        console.log(next);
-        console.log(this.state.piece);
         if (next === this.state.piece) {
             this.setState({turn: true}, ()=> {this.setTurnMessage()}); 
         } else {
@@ -116,14 +102,11 @@ class Board extends React.Component {
 
     setTurnMessage = () => {
         const msg = this.state.turn ? "Your Turn" : this.state.opponentName + "'s Turn"; 
-        console.log(msg);
         this.setState({message: msg}); 
     }
 
     handleUpdate = (newBoard, next) => {
-        console.log(newBoard);
         this.setBoard(newBoard); 
-        console.log(next);
         this.setTurn(next);
     }
 
@@ -163,8 +146,6 @@ class Board extends React.Component {
     }
 
     handleClickSquare  = (index) => {
-        console.log(this.state.board);
-        console.log(index);
         const board = this.state.board; 
         const turn = this.state.turn; 
         const gameID = this.state.gameID; 
@@ -172,20 +153,13 @@ class Board extends React.Component {
         const piece = this.state.piece; 
 
         const squareIsEmpty = (board[index] === "");
-        console.log(board[index]);
 
-        console.log("clicked");
         if (squareIsEmpty && turn) {
-            console.log("move");
             this.socket.emit("move", {playerName, gameID, index, piece});
         }
     }
 
     render() {
-        if (this.state.leave) {
-            console.log("LEFT2");
-        }
-
         if (!this.state.initialized) {
             return (
             <div className="App">

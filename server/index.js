@@ -17,12 +17,6 @@ const socketIo = new Server(server, {
 
 const gameManager = new GameManager();
 
-// server -> listens to create new game -> game manager creates new game id + session manager -> so every game has a session manager 
-// server -> listens to moves -> session manager will take read, write and store the moves 
-// -> announce winner 
-// -> after game end  
-// -> ask game manager to close room & save data -> shld  i create database hmm 
-
 // Listen for when client connects via socket.io-client
 socketIo.on('connection', (socket) => {
     console.log(`User connected ${socket.id}`);
@@ -61,10 +55,7 @@ socketIo.on('connection', (socket) => {
     })
 
     socket.on("move", (args) => {
-        console.log("moving");
-        // playerName, gameID, index, piece 
         const playerName = args.playerName; 
-        console.log(playerName);
         const gameID = args.gameID;
         const index = args.index; 
         const piece = args.piece; 
@@ -73,12 +64,10 @@ socketIo.on('connection', (socket) => {
         const status = gameManager.checkStatus(playerName, gameID, piece);
 
         const newBoard = values.newBoard; 
-        console.log(newBoard);
 
         socket.join(gameID);
         switch(status) {
             case(0):
-                console.log("???");
                 socketIo.to(socket.id).emit("won", {newBoard});
                 socket.to(gameID).emit("opponentWon", {newBoard});
                 break;
@@ -102,8 +91,7 @@ socketIo.on('connection', (socket) => {
 
     socket.on("getResults", () => {
         const results = gameManager.getResults();
-        console.log(results);
-        socketIo.to(socket.id).emit("resu;ts", results);
+        socketIo.to(socket.id).emit("results", results);
     })
 
     socket.on("leave", (args) => {

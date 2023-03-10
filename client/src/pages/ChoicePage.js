@@ -82,7 +82,7 @@ class ChoicePageComponent extends React.Component {
                             <button className="button" type="submit" onClick={this.handleJoinGame.bind(this)} aria-label="join a game button">Join A Game</button>
                             <br></br>
                             <br></br>
-                            <button className="button" type="submit" onClick={this.handleView.bind(this)} aria-label="view past games">View Past Games</button>
+                            <button className="button" type="submit" onClick={this.handleView.bind(this)} aria-label="view past games button">View Past Games</button>
                        </div>
                     </div>
                 )  

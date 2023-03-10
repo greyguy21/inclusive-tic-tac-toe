@@ -13,7 +13,7 @@ const ViewPage = () => {
 
     socket.emit("getResults"); 
 
-    socket.on("resu;ts", (results) => {
+    socket.on("results", (results) => {
         setGames(results);
     })
     console.log(games);
