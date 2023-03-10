@@ -75,7 +75,7 @@ class ChoicePageComponent extends React.Component {
                         <h1>hi {this.state.playerName}</h1>
                         <label className="text">Would you like to</label>
                         <br></br>
-                       <div>
+                       <div className="try">
                             <button className="button" type="submit" onClick={this.handleCreateGame.bind(this)} aria-label="create a new game button">Create A New Game</button>
                             <br></br>
                             <br></br>

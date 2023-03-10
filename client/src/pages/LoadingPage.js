@@ -25,7 +25,7 @@ const LoadingPage = () => {
             <header aria-label="game id">
                 <h1>{gameID}</h1>
             </header>
-            <label>Copy the code and send to a friend</label>
+            <label className="text">Copy the game ID and send it to a friend</label>
         </div>
     );
 }

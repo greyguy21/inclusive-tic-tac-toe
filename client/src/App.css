@@ -55,8 +55,8 @@
 }
 
 .Board {
-  width: 500px;
-  height: 500px;
+  width: 600px;
+  height: 600px;
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -104,7 +104,8 @@
 .button{
   font-size: large;
   width: 100%;
-  outline-color: blue;   
+  height: 60px !important;
+  outline-color: blue  ;   
   outline-width: 100;
 }
 
@@ -116,6 +117,7 @@
 
 .button50 {
   width: 50%;
+  height: 80%;
   outline-color: blue;   
   outline-width: 100;
 }
@@ -140,4 +142,19 @@
 .table-data, .header__item {
 	flex: 1 1 20%;
 	text-align:center;
+}
+
+.choice {
+  height: 60px;
+  width: 300px !important;
+}
+
+.game {
+  height: 100px;
+}
+
+.welcome {
+  height: 60px !important;
+  width: 50%;
+  font-size: 20px;
 }

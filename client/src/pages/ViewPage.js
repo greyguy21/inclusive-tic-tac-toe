@@ -16,11 +16,9 @@ const ViewPage = () => {
     socket.on("results", (results) => {
         setGames(results);
     })
-    console.log(games);
 
     const noResults = (games.length === 0);
 
-    console.log(playerName);
     const navigate = useNavigate();
     const goBack = () => {
         navigate(-1, playerName);
@@ -28,7 +26,7 @@ const ViewPage = () => {
 
     return (
         <div className="App">
-            <button aria-label="back button" onClick={goBack}>Back</button>
+            <button aria-label="back button" className="welcome" onClick={goBack}>Back</button>
             <h1 id="pastGamesResults">Past Games</h1>
             {
                 noResults
