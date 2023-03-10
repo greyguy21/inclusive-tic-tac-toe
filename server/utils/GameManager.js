@@ -17,27 +17,39 @@ class GameManager {
     }
 
     createNewGame = (playerName) => {
-        console.log(playerName);
         const gameID = this.generateGameID();
-        const playerOne = new Player(playerName, gameID);
-        const game = new Game(playerOne, gameID);
+        const playerOne = new Player(playerName, gameID, "X");
+        const game = new Game(playerName, playerOne, gameID);
         this.gamesWaiting.set(gameID, game);
         return gameID;
     }
 
     joinGame = (playerName, gameID) => {
-        console.log(this.gamesWaiting);
-        console.log(gameID);
         const canJoin = this.gamesWaiting.has(gameID);
-        console.log(canJoin);
         if (canJoin) {
             const game = this.gamesWaiting.get(gameID);
-            const playerTwo = new Player(playerName, gameID); 
-            game.addPlayerTwo(playerTwo);
+            const playerTwo = new Player(playerName, gameID, "O"); 
+            game.addPlayerTwo(playerName, playerTwo);
+            this.gamesInProgress.set(gameID, game);
+            this.gamesWaiting.delete(gameID);
             return true; 
         } else {
             return false; 
         }
+    }
+
+    startGame = (playerName, gameID) => {
+        const game = this.gamesInProgress.get(gameID);
+        const player = game.players.get(playerName);
+        
+        const board = game.board.state; 
+        const turn = "X"; 
+        
+        const piece = player.piece; 
+        const opponentName = game.playerNames.get(playerName);
+        console.log(opponentName);
+
+        return {board, piece, turn, opponentName}; 
     }
 
 }

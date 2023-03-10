@@ -45,10 +45,20 @@ socketIo.on('connection', (socket) => {
         const gameJoined = gameManager.joinGame(playerName, gameID);
         if (gameJoined) {
             socket.join(gameID);
-            socketIo.in(gameID).emit("gameStart"); 
+            socketIo.in(gameID).emit("goToGamePage"); 
         } else {
             socketIo.to(socket.id).emit("joinError");
         }
+    })
+
+    socket.on("startGame", (args) => {
+        console.log("here");
+        const playerName = args.playerName; 
+        const gameID = args.gameID; 
+
+        const values = gameManager.startGame(playerName, gameID);
+
+        socketIo.to(socket.id).emit("gameStarted", values); 
     })
 
     socket.on("connect_error", (err) => {

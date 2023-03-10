@@ -40,14 +40,14 @@ class JoinPageComponent extends React.Component {
             gameID: this.state.gameID
         });
 
-        this.socket.on("gameStart", () => {
+        this.socket.on("goToGamePage", () => {
             this.setState({proceed: true});
         }) 
     }
     
     render() {
        if (this.state.proceed) {
-        return <Navigate to="/GamePage" state={{gameID: this.state.gameID}}></Navigate>
+        return <Navigate to="/GamePage" state={{gameID: this.state.gameID, playerName: this.state.playerName}}></Navigate>
        } else {
         return (
             <div className="App">

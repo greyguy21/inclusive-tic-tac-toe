@@ -55,7 +55,7 @@ class ChoicePageComponent extends React.Component {
         switch(this.state.choice){
             case(1): 
                 return (
-                    <Navigate to="/LoadingPage" state={{gameID: this.state.gameID}}></Navigate>
+                    <Navigate to="/LoadingPage" state={{gameID: this.state.gameID, playerName: this.state.playerName}}></Navigate>
                 )
             case(2): 
                 return (

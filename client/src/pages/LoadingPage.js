@@ -7,15 +7,17 @@ const ENDPOINT = 'http://localhost:4000/';
 const LoadingPage = () => {
     const location = useLocation(); 
     const gameID = location.state.gameID; 
+    const playerName = location.state.playerName;
     console.log(gameID);
+    console.log(playerName);
 
     const socket = io(ENDPOINT);
     
     socket.emit("waiting", {gameID: gameID}); 
 
     const navigate = useNavigate();
-    socket.on("gameStart", () => {
-        navigate("/GamePage", {state: {gameID: gameID}});
+    socket.on("goToGamePage", () => {
+        navigate("/GamePage", {state: {gameID: gameID, playerName: playerName}});
     });
 
     return (
