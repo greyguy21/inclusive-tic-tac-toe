@@ -1,8 +1,8 @@
 
-const Square = (val) => {
+const Square = (props) => {
     return (
-        <div className="Square">
-            <h1>{val.val}</h1>
+        <div className="Square" onClick={props.onClick.bind(this, props.index)}>
+            <h1>{props.value}</h1>
         </div>
     )
 }

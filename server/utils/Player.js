@@ -3,7 +3,6 @@ class Player {
         this.playerName = playerName; 
         this.gameID = gameID; 
         this.piece = piece;
-        this.moves = [];
     }
 }
 

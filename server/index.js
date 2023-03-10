@@ -52,13 +52,27 @@ socketIo.on('connection', (socket) => {
     })
 
     socket.on("startGame", (args) => {
-        console.log("here");
         const playerName = args.playerName; 
         const gameID = args.gameID; 
 
         const values = gameManager.startGame(playerName, gameID);
 
         socketIo.to(socket.id).emit("gameStarted", values); 
+    })
+
+    socket.on("move", (args) => {
+        console.log("moving");
+        // playerName, gameID, index, piece 
+        const playerName = args.playerName; 
+        const gameID = args.gameID;
+        const index = args.index; 
+        const piece = args.piece; 
+        
+        const values = gameManager.move(playerName, gameID, index, piece); 
+
+        console.log(values);
+        socket.join(gameID);
+        socketIo.in(gameID).emit("update", values);
     })
 
     socket.on("connect_error", (err) => {

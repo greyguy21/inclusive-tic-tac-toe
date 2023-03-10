@@ -40,16 +40,27 @@ class GameManager {
 
     startGame = (playerName, gameID) => {
         const game = this.gamesInProgress.get(gameID);
+        console.log(game);
+        console.log(game.players);
         const player = game.players.get(playerName);
-        
+    
         const board = game.board.state; 
-        const turn = "X"; 
+        const next = "X"; 
         
         const piece = player.piece; 
         const opponentName = game.playerNames.get(playerName);
         console.log(opponentName);
 
-        return {board, piece, turn, opponentName}; 
+        return {board, piece, next, opponentName}; 
+    }
+
+    move = (playerName, gameID, index, piece) => {
+        const game = this.gamesInProgress.get(gameID);
+        const player = game.players.get(playerName);
+
+        const values = game.board.update(index, piece);
+        console.log(values);
+        return values; 
     }
 
 }

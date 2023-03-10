@@ -23,7 +23,6 @@ class Board extends React.Component {
     componentDidMount() {
         this.socket = io(ENDPOINT);
 
-        console.log("hi");
         if (!this.state.initialized) {
             console.log(this.props);
             const playerName = this.props.playerName; 
@@ -36,27 +35,38 @@ class Board extends React.Component {
 
             // emit event to server that player has joined game room 
             this.socket.emit("startGame", {playerName, gameID}); 
-            this.socket.on("gameStarted", ({board, piece, turn, opponentName}) => {
+            this.socket.on("gameStarted", ({board, piece, next, opponentName}) => {
                 console.log("initializing");
-                this.initializeGame(board, piece, turn, opponentName);
+                this.initializeGame(board, piece, next, opponentName);
             })
         }
 
+        this.socket.on("update", ({newBoard, next}) => {
+            console.log("updated");
+            this.handleUpdate(newBoard, next);
+        });
+    }
+
+    componentDidUpdate() {
+        if (!this.state.turn) {
+            console.log("waiting");
+            this.socket.emit("waiting", {gameID: this.state.gameID});
+        }
     }
 
     componentWillUnmount() {
         this.socket.disconnect();
     }
 
-    initializeGame = (board, piece, turn, opponentName) => {
+    initializeGame = (board, piece, next, opponentName) => {
         this.setState({opponentName: opponentName});
-        this.setState({piece: piece}, () => {this.startGame(board, turn)}); 
+        this.setState({piece: piece}, () => {this.startGame(board, next)}); 
     }
 
-    startGame = (board, turn) => {
+    startGame = (board, next) => {
         console.log(this.state.piece);
         this.setBoard(board);
-        this.setTurn(turn);
+        this.setTurn(next);
         this.setState({initialized: true});
     }
 
@@ -64,9 +74,10 @@ class Board extends React.Component {
         this.setState({board: board});
     }
 
-    setTurn = (turn) => {
+    setTurn = (next) => {
+        console.log(next);
         console.log(this.state.piece);
-        if (turn === this.state.piece) {
+        if (next === this.state.piece) {
             this.setState({turn: true}, ()=> {this.setTurnMessage()}); 
         } else {
             this.setState({turn: false}, () => {this.setTurnMessage()});
@@ -77,6 +88,32 @@ class Board extends React.Component {
         const msg = this.state.turn ? "Your Turn" : this.state.opponentName + "'s Turn"; 
         console.log(msg);
         this.setState({turnMessage: msg}); 
+    }
+
+    handleUpdate = (newBoard, next) => {
+        console.log(newBoard);
+        this.setBoard(newBoard); 
+        console.log(next);
+        this.setTurn(next);
+    }
+
+    handleClickSquare  = (index) => {
+        console.log(this.state.board);
+        console.log(index);
+        const board = this.state.board; 
+        const turn = this.state.turn; 
+        const gameID = this.state.gameID; 
+        const playerName = this.state.gameID; 
+        const piece = this.state.piece; 
+
+        const squareIsEmpty = (board[index] === "");
+        console.log(board[index]);
+
+        console.log("clicked");
+        if (squareIsEmpty && turn) {
+            console.log("move");
+            this.socket.emit("move", {playerName, gameID, index, piece});
+        }
     }
 
     render() {
@@ -93,19 +130,19 @@ class Board extends React.Component {
                     <h1>{this.state.turnMessage}</h1>
                     <h3>Your Piece is {this.state.piece}</h3>
                     <div className="Row">{/*Row */}
-                        <Square val={this.state.board[0]}/>
-                        <Square val={this.state.board[1]}/>
-                        <Square val={this.state.board[2]}/>
+                        <Square index={0} value={this.state.board[0]} onClick={this.handleClickSquare.bind(this)}/>
+                        <Square index={1} value={this.state.board[1]} onClick={this.handleClickSquare.bind(this)}/>
+                        <Square index={2} value={this.state.board[2]} onClick={this.handleClickSquare.bind(this)}/>
                     </div>
                     <div className="Row">{/*Row */}
-                        <Square val={this.state.board[3]}/>
-                        <Square val={this.state.board[4]}/>
-                        <Square val={this.state.board[5]}/>               
+                        <Square index={3} value={this.state.board[3]} onClick={this.handleClickSquare.bind(this)}/>
+                        <Square index={4} value={this.state.board[4]} onClick={this.handleClickSquare.bind(this)}/>
+                        <Square index={5} value={this.state.board[5]} onClick={this.handleClickSquare.bind(this)}/>               
                     </div>
                     <div className="Row">{/*Row */}
-                        <Square val={this.state.board[6]}/>
-                        <Square val={this.state.board[7]}/>
-                        <Square val={this.state.board[8]}/>
+                        <Square index={6} value={this.state.board[6]} onClick={this.handleClickSquare.bind(this)}/>
+                        <Square index={7} value={this.state.board[7]} onClick={this.handleClickSquare.bind(this)}/>
+                        <Square index={8} value={this.state.board[8]} onClick={this.handleClickSquare.bind(this)}/>
                     </div>                
                 </div>
             )
