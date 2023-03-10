@@ -8,7 +8,7 @@ const GamePage = () => {
     const playerName = location.state.playerName;
 
     return (
-        <div className="App">
+        <div>
             <Board aria-label="game board" gameID={gameID} playerName={playerName}></Board>
             {/* Leave Game*/}
             {/* Play Again */}

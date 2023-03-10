@@ -104,6 +104,10 @@ class GameManager {
         return this.results;
     }
 
+    deleteGameInProgress = (gameID) => {
+        this.gamesInProgress.delete(gameID);
+    }
+
 }
 
 module.exports = GameManager;

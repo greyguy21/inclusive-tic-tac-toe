@@ -106,6 +106,14 @@ socketIo.on('connection', (socket) => {
         socketIo.to(socket.id).emit("resu;ts", results);
     })
 
+    socket.on("leave", (args) => {
+        const gameID = args.gameID;
+        gameManager.deleteGameInProgress(gameID); 
+        socket.join(gameID);
+        socketIo.in(gameID).emit("left");
+
+
+    })
     socket.on("connect_error", (err) => {
         console.log(`connect_error due to ${err.message}`);
     })

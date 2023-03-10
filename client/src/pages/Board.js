@@ -1,6 +1,7 @@
 import "../App.css";
 import React from "react";
 import io from "socket.io-client";
+import { Navigate } from "react-router-dom";
 
 const ENDPOINT = 'http://localhost:4000/';
 
@@ -17,6 +18,7 @@ class Board extends React.Component {
             gameID: "", 
             initialized: false, 
             end: false, 
+            leave: false,
         }
     }
 
@@ -64,6 +66,11 @@ class Board extends React.Component {
 
         this.socket.on("gameReset", ({newBoard, next}) => {
             this.handleReset(newBoard, next); 
+        })
+
+        this.socket.on("left", () => {
+            console.log("LEFT");
+            this.setState({leave: true});
         })
     }
 
@@ -147,6 +154,11 @@ class Board extends React.Component {
         this.setState({end: false});
     }
 
+    handleLeave = () => {
+        const gameID = this.state.gameID; 
+        this.socket.emit("leave", {gameID});
+    }
+
     handleClickSquare  = (index) => {
         console.log(this.state.board);
         console.log(index);
@@ -167,12 +179,20 @@ class Board extends React.Component {
     }
 
     render() {
+        if (this.state.leave) {
+            console.log("LEFT2");
+        }
+
         if (!this.state.initialized) {
             return (
             <div className="App">
                 <h1>Setting up...</h1>
             </div>
             )
+        } else if (this.state.leave) {
+            return (
+                <Navigate to="/ChoicePage" state={{playerName: this.state.playerName}}></Navigate>
+            );
         } else {
             return (
                 <div className="Board">
@@ -194,7 +214,7 @@ class Board extends React.Component {
                         <button aria-label={`row 3 column 2 ${this.state.board[7]}`} className="Square" onClick={this.handleClickSquare.bind(this, 7)}>{this.state.board[7]}</button>
                         <button aria-label={`row 3 column 3 ${this.state.board[8]}`} className="Square" onClick={this.handleClickSquare.bind(this, 8)}>{this.state.board[8]}</button>
                     </div>        
-                    {this.state.end ? <button aria-label="play again button" type="submit" onClick={this.handlePlayAgain.bind(this)}>Play Again</button> : null}      
+                    {this.state.end ? <div><button aria-label="play again button" type="submit" onClick={this.handlePlayAgain.bind(this)}>Play Again</button><button aria-label="leave game" type="submit" onClick={this.handleLeave.bind(this)}>Leave Game</button></div> : null}      
                 </div>
             )
         }
