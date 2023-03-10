@@ -21,6 +21,7 @@ class JoinPageComponent extends React.Component {
             gameID: null,
             playerName: "",
             proceed: false, 
+            error: false, 
         }
     }
 
@@ -40,6 +41,10 @@ class JoinPageComponent extends React.Component {
             gameID: this.state.gameID
         });
 
+        this.socket.on("joinError", () => { 
+            this.setState({error: true});
+        })
+
         this.socket.on("goToGamePage", () => {
             this.setState({proceed: true});
         }) 
@@ -51,7 +56,7 @@ class JoinPageComponent extends React.Component {
        } else {
         return (
             <div className="App">
-            <h1>Enter Your Game ID</h1>
+            {this.state.error ?<h1>Game does not exist. Try Again.</h1> : <h1>Enter Your Game ID</h1>}
             <form onSubmit={(this.handleOnSubmit.bind(this))}>
                 <input type="text" onChange={this.handleOnChange.bind(this)}></input>
                 <br></br>

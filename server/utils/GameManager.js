@@ -84,7 +84,7 @@ class GameManager {
         const board = game.board; 
         const moves = game.board.moves; 
         
-        const index = this.results.length == undefined ? 0 : this.results.length; 
+        const index = this.results.size;
         this.results.set(index, {gameID, board, moves, playerName, piece, opponentPlayer, opponentPiece, winner, draw});
         console.log(this.results);
     }
