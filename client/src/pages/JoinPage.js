@@ -1,5 +1,5 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 import io from "socket.io-client";
 
 const ENDPOINT = 'http://localhost:4000/';
@@ -41,24 +41,28 @@ class JoinPageComponent extends React.Component {
         });
 
         this.socket.on("gameStart", () => {
-            console.log("game starts");
+            this.setState({proceed: true});
         }) 
     }
     
     render() {
+       if (this.state.proceed) {
+        return <Navigate to="/GamePage" state={{gameID: this.state.gameID}}></Navigate>
+       } else {
         return (
-        <div className="App">
-        <h1>Enter Your Game ID</h1>
-        <form onSubmit={(this.handleOnSubmit.bind(this))}>
-            <input type="text" onChange={this.handleOnChange.bind(this)}></input>
-            <br></br>
-            <br></br>
-            <label>Then, click Join</label>
-            <br></br>
-            <button type="submit">Join</button>
-        </form>
-        </div>
-        ); 
+            <div className="App">
+            <h1>Enter Your Game ID</h1>
+            <form onSubmit={(this.handleOnSubmit.bind(this))}>
+                <input type="text" onChange={this.handleOnChange.bind(this)}></input>
+                <br></br>
+                <br></br>
+                <label>Then, click Join</label>
+                <br></br>
+                <button type="submit">Join</button>
+            </form>
+            </div>
+            ); 
+       }
     }
 }
 

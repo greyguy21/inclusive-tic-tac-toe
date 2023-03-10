@@ -4,6 +4,7 @@ import NamePage from "./pages/NamePage";
 import ChoicePage from "./pages/ChoicePage";
 import LoadingPage from "./pages/LoadingPage";
 import JoinPage from "./pages/JoinPage";
+import GamePage from "./pages/GamePage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 const App = () => {
@@ -15,6 +16,7 @@ const App = () => {
       <Route path="/ChoicePage" element={<ChoicePage/>}/>
       <Route path="/LoadingPage" element={<LoadingPage/>}/>
       <Route path="/JoinPage" element={<JoinPage/>}/>
+      <Route path="/GamePage" element={<GamePage/>}/>
     </Routes>
   </BrowserRouter>
   )

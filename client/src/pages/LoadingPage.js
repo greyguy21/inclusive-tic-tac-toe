@@ -1,5 +1,5 @@
 import "../App.css";
-import { useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import io from "socket.io-client";
 
 const ENDPOINT = 'http://localhost:4000/';
@@ -7,13 +7,15 @@ const ENDPOINT = 'http://localhost:4000/';
 const LoadingPage = () => {
     const location = useLocation(); 
     const gameID = location.state.gameID; 
+    console.log(gameID);
 
     const socket = io(ENDPOINT);
     
     socket.emit("waiting", {gameID: gameID}); 
 
+    const navigate = useNavigate();
     socket.on("gameStart", () => {
-        console.log("game starts");
+        navigate("/GamePage", {state: {gameID: gameID}});
     });
 
     return (
