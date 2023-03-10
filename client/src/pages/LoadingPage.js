@@ -22,8 +22,10 @@ const LoadingPage = () => {
 
     return (
         <div className="App">
-            <div className="loading-spinner"></div>
             <h1>Waiting for Player 2</h1>
+            <div className="loading-spinner"></div>
+            <h1>{gameID}</h1>
+            <label>Copy the code and send to a friend</label>
         </div>
     );
 }
