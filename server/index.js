@@ -64,12 +64,13 @@ socketIo.on('connection', (socket) => {
         console.log("moving");
         // playerName, gameID, index, piece 
         const playerName = args.playerName; 
+        console.log(playerName);
         const gameID = args.gameID;
         const index = args.index; 
         const piece = args.piece; 
         
-        const values = gameManager.move(playerName, gameID, index, piece); 
-        const status = gameManager.checkStatus(gameID, piece);
+        const values = gameManager.move(gameID, index, piece); 
+        const status = gameManager.checkStatus(playerName, gameID, piece);
 
         const newBoard = values.newBoard; 
         console.log(newBoard);
@@ -88,6 +89,15 @@ socketIo.on('connection', (socket) => {
                 socketIo.in(gameID).emit("update", values);
                 break;
         }
+    })
+
+    socket.on("playAgain", (args) => {
+        const gameID = args.gameID; 
+
+        const values = gameManager.resetGame(gameID);
+
+        socket.join(gameID); 
+        socketIo.in(gameID).emit("gameReset", values);
     })
 
     socket.on("connect_error", (err) => {

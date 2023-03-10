@@ -5,6 +5,8 @@ const Player = require('./Player');
 class GameManager {
     gamesWaiting = new Map(); 
     gamesInProgress = new Map();
+    gamesEnded = new Map();
+    results = new Map();
 
     generateGameID = () => {
         var gameIDExists = true; 
@@ -40,8 +42,6 @@ class GameManager {
 
     startGame = (playerName, gameID) => {
         const game = this.gamesInProgress.get(gameID);
-        console.log(game);
-        console.log(game.players);
         const player = game.players.get(playerName);
     
         const board = game.board.state; 
@@ -54,24 +54,52 @@ class GameManager {
         return {board, piece, next, opponentName}; 
     }
 
-    move = (playerName, gameID, index, piece) => {
+    move = (gameID, index, piece) => {
         const game = this.gamesInProgress.get(gameID);
         const values = game.board.update(index, piece);
         return values; 
     }
 
-    checkStatus = (gameID, piece) => {
+    checkStatus = (playerName, gameID, piece) => {
         const game = this.gamesInProgress.get(gameID);
 
         if (game.board.checkWin(piece)) {
+            this.handleResults(playerName, piece, gameID, game, playerName, false);
+            this.gamesEnded.set(gameID, game);
+            this.gamesInProgress.delete(gameID);
             return 0;
         } else if (game.board.checkDraw()) {
-            console.log("??");
+            this.handleResults(playerName, piece, gameID, game, "", true);
+            this.gamesEnded.set(gameID, game);
+            this.gamesInProgress.delete(gameID);
             return 1; 
         } else {
             return 2; 
         }
     } 
+
+    handleResults = (playerName, piece, gameID, game, winner, draw) => {
+        const opponentPlayer = game.playerNames.get(playerName);
+        const opponentPiece = piece == "X" ? "O" : "X"; 
+        const board = game.board; 
+        const moves = game.board.moves; 
+        
+        const index = this.results.length == undefined ? 0 : this.results.length; 
+        this.results.set(index, {gameID, board, moves, playerName, piece, opponentPlayer, opponentPiece, winner, draw});
+        console.log(this.results);
+    }
+
+    resetGame = (gameID) => {
+        const game = this.gamesEnded.get(gameID);
+        game.resetGame(); 
+        
+        this.gamesEnded.delete(gameID);
+        this.gamesInProgress.set(gameID, game);
+
+        const newBoard = game.board.state; 
+        const next = "X";
+        return {newBoard, next};
+    }
 
 }
 

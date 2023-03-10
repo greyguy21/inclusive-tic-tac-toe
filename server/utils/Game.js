@@ -14,6 +14,10 @@ class Game {
         this.playerNames.set(this.playerOneName, playerTwoName); 
         this.playerNames.set(playerTwoName, this.playerOneName); 
     }
+
+    resetGame = () => {
+        this.board = new Board();
+    }
 }
 
 module.exports = Game;

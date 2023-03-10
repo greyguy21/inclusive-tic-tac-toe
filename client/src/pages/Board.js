@@ -62,6 +62,10 @@ class Board extends React.Component {
             console.log("draww"); 
             this.handleDraw(newBoard); 
         })
+
+        this.socket.on("gameReset", ({newBoard, next}) => {
+            this.handleReset(newBoard, next); 
+        })
     }
 
     componentDidUpdate() {
@@ -133,13 +137,24 @@ class Board extends React.Component {
         this.setState({end: true});
     }
 
+    handlePlayAgain = () => {
+        const gameID = this.state.gameID;
+        this.socket.emit("playAgain", {gameID});
+    }
+
+    handleReset = (newBoard, next) => {
+        this.setBoard(newBoard);
+        this.setTurn(next);
+        this.setState({end: false});
+    }
+
     handleClickSquare  = (index) => {
         console.log(this.state.board);
         console.log(index);
         const board = this.state.board; 
         const turn = this.state.turn; 
         const gameID = this.state.gameID; 
-        const playerName = this.state.gameID; 
+        const playerName = this.state.playerName; 
         const piece = this.state.piece; 
 
         const squareIsEmpty = (board[index] === "");
@@ -161,7 +176,6 @@ class Board extends React.Component {
             )
         } else {
             return (
-
                 <div className="Board">
                     {/*Board */}
                     <h1>{this.state.message}</h1>
@@ -180,7 +194,8 @@ class Board extends React.Component {
                         <Square index={6} value={this.state.board[6]} onClick={this.handleClickSquare.bind(this)}/>
                         <Square index={7} value={this.state.board[7]} onClick={this.handleClickSquare.bind(this)}/>
                         <Square index={8} value={this.state.board[8]} onClick={this.handleClickSquare.bind(this)}/>
-                    </div>              
+                    </div>        
+                    {this.state.end ? <button type="submit" onClick={this.handlePlayAgain.bind(this)}>Play Again</button> : null}      
                 </div>
             )
         }
