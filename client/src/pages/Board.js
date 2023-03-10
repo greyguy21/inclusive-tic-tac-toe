@@ -217,7 +217,7 @@ class Board extends React.Component {
                         <button aria-label={`row 3 column 2 ${this.state.board[7]}`} className="Square" onClick={this.handleClickSquare.bind(this, 7)}>{this.state.board[7]}</button>
                         <button aria-label={`row 3 column 3 ${this.state.board[8]}`} className="Square" onClick={this.handleClickSquare.bind(this, 8)}>{this.state.board[8]}</button>
                     </div>        
-                    {this.state.end ? <div><button className="gameButton" aria-label="play again button" type="submit" onClick={this.handlePlayAgain.bind(this)}>Play Again</button><button className="gameButton" aria-label="leave game" type="submit" onClick={this.handleLeave.bind(this)}>Leave Game</button></div> : null}      
+                    {this.state.end ? <div><button className="button50" aria-label="play again button" type="submit" onClick={this.handlePlayAgain.bind(this)}>Play Again</button><button className="button50" aria-label="leave game" type="submit" onClick={this.handleLeave.bind(this)}>Leave Game</button></div> : null}      
                 </div>
             )
         }

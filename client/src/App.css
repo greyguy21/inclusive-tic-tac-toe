@@ -108,17 +108,36 @@
   outline-width: 100;
 }
 
-#startButton {
-  width: 50% !important;
-}
-
-
 .text{
   font-size: large;
   font-weight: 500;
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.gameButton {
+.button50 {
   width: 50%;
+  outline-color: blue;   
+  outline-width: 100;
+}
+
+.table {
+  width: 100%;
+  border: 1px solid grey; 
+}
+
+.table-header {
+    display: flex;
+    width: 100%; 
+    padding: 10 0; 
+}
+
+.table-row {
+  display: flex;
+  width: 100%; 
+  padding: 10 0;
+}
+
+.table-data, .header__item {
+	flex: 1 1 20%;
+	text-align:center;
 }

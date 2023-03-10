@@ -33,32 +33,34 @@ const ViewPage = () => {
             {
                 noResults
                 ? <h3>No history of past games available. Try Refreshing.</h3>
-                :  <table aria-labelledby="pastGameResults">
-                <thead>
-                    <tr>
-                        <th>Outcome</th>
-                        <th>Players Details</th>
-                        <th>Board</th>
-                        <th>Moves</th>
-                        <th>Winner</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {games && games.map((g, index) => {
-                       return (
-                        <tr key={index}>
-                            {g[8] ? <td>Draw</td> : <td>Win</td>}
-                            <td>{g[4]}: {g[3]} 
-                                {g[6]}: {g[5]}
-                            </td>
-                            <td>{g[1]}</td>
-                            <td>{g[2]}</td>
-                            <td>{g[7]}</td>
+                :  <table className="table" aria-labelledby="pastGameResults">
+                    <thead className="tableHeader">
+                        <tr>
+                            <th className="headerItem">Outcome</th>
+                            <th className="headerItem">Players Details</th>
+                            <th className="headerItem">Board</th>
+                            <th className="headerItem">Moves</th>
+                            <th className="headerItem">Winner</th>
                         </tr>
-                       )
-                    })}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {games && games.map((g, index) => {
+                        return (
+                            <tr className="tableRow" key={index}>
+                                {g[8] ? <td className="tableData">Draw</td> : <td className="tableData">Win</td>}
+                                <td className="tableData">
+                                    {g[4]}: {g[3]} 
+                                    <br></br>
+                                    {g[6]}: {g[5]}
+                                </td>
+                                <td className="tableData">{g[1]}</td>
+                                <td className="tableData">{g[2]}</td>
+                                <td className="tableData">{g[7]}</td>
+                            </tr>
+                        )
+                        })}
+                    </tbody>
+                </table>
             }
         </div>
     );
