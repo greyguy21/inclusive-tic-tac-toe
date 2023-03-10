@@ -27,15 +27,15 @@ const NamePage = () => {
 
     return (
         <div className="App">
-        <h1>Enter Your Name</h1>
+        <h1 id="enterName">Enter Your Name</h1>
         <label>You change the name below to something you like.</label>
         <form onSubmit={handleOnSubmit}>
-            <input type="text" value={playerName} onChange={handleOnChange}></input>
+            <input type="text" value={playerName} onChange={handleOnChange} aria-labelledby="enterName"></input>
             <br></br>
             <br></br>
             <label>Then, click Next to continue</label>
             <br></br>
-            <button type="submit">Next</button>
+            <button type="submit" aria-label="next button">Next</button>
         </form>
         </div>
     );  

@@ -1,6 +1,5 @@
 import "../App.css";
 import React from "react";
-// import Square from "./Square";
 import io from "socket.io-client";
 
 const ENDPOINT = 'http://localhost:4000/';
@@ -181,21 +180,21 @@ class Board extends React.Component {
                     <h1>{this.state.message}</h1>
                     {!this.state.end ? <h3>Your Piece is {this.state.piece}</h3> : null}
                     <div className="Row">{/*Row */}
-                        <button className="Square" onClick={this.handleClickSquare.bind(this, 0)}>{this.state.board[0]}</button>
-                        <button className="Square" onClick={this.handleClickSquare.bind(this, 1)}>{this.state.board[1]}</button>
-                        <button className="Square" onClick={this.handleClickSquare.bind(this, 2)}>{this.state.board[2]}</button>
+                        <button aria-label={`row 1 column 1 ${this.state.board[0]}`} className="Square" onClick={this.handleClickSquare.bind(this, 0)}>{this.state.board[0]}</button>
+                        <button aria-label={`row 1 column 2 ${this.state.board[1]}`} className="Square" onClick={this.handleClickSquare.bind(this, 1)}>{this.state.board[1]}</button>
+                        <button aria-label={`row 1 column 3 ${this.state.board[2]}`} className="Square" onClick={this.handleClickSquare.bind(this, 2)}>{this.state.board[2]}</button>
                     </div>
                     <div className="Row">{/*Row */}
-                        <button className="Square" onClick={this.handleClickSquare.bind(this, 3)}>{this.state.board[3]}</button>
-                        <button className="Square" onClick={this.handleClickSquare.bind(this, 4)}>{this.state.board[4]}</button>
-                        <button className="Square" onClick={this.handleClickSquare.bind(this, 5)}>{this.state.board[5]}</button>
+                        <button aria-label={`row 2 column 1 ${this.state.board[3]}`} className="Square" onClick={this.handleClickSquare.bind(this, 3)}>{this.state.board[3]}</button>
+                        <button aria-label={`row 2 column 2 ${this.state.board[4]}`} className="Square" onClick={this.handleClickSquare.bind(this, 4)}>{this.state.board[4]}</button>
+                        <button aria-label={`row 2 column 3 ${this.state.board[5]}`} className="Square" onClick={this.handleClickSquare.bind(this, 5)}>{this.state.board[5]}</button>
                     </div>
                     <div className="Row">{/*Row */}
-                        <button className="Square" onClick={this.handleClickSquare.bind(this, 6)}>{this.state.board[6]}</button>
-                        <button className="Square" onClick={this.handleClickSquare.bind(this, 7)}>{this.state.board[7]}</button>
-                        <button className="Square" onClick={this.handleClickSquare.bind(this, 8)}>{this.state.board[8]}</button>
+                        <button aria-label={`row 3 column 1 ${this.state.board[6]}`} className="Square" onClick={this.handleClickSquare.bind(this, 6)}>{this.state.board[6]}</button>
+                        <button aria-label={`row 3 column 2 ${this.state.board[7]}`} className="Square" onClick={this.handleClickSquare.bind(this, 7)}>{this.state.board[7]}</button>
+                        <button aria-label={`row 3 column 3 ${this.state.board[8]}`} className="Square" onClick={this.handleClickSquare.bind(this, 8)}>{this.state.board[8]}</button>
                     </div>        
-                    {this.state.end ? <button type="submit" onClick={this.handlePlayAgain.bind(this)}>Play Again</button> : null}      
+                    {this.state.end ? <button aria-label="play again button" type="submit" onClick={this.handlePlayAgain.bind(this)}>Play Again</button> : null}      
                 </div>
             )
         }

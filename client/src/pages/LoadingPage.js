@@ -21,10 +21,12 @@ const LoadingPage = () => {
     });
 
     return (
-        <div className="App">
+        <div id="loading" className="App">
             <h1>Waiting for Player 2</h1>
-            <div className="loading-spinner"></div>
-            <h1>{gameID}</h1>
+            <div aria-labelledby="loading" className="loading-spinner"></div>
+            <header aria-label="game id">
+                <h1>{gameID}</h1>
+            </header>
             <label>Copy the code and send to a friend</label>
         </div>
     );

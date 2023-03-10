@@ -1,11 +1,12 @@
 import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import io from "socket.io-client";
 
 const ENDPOINT = 'http://localhost:4000/';
 
 const ViewPage = () => {
-    // const location = useLocation(); 
-    // const playerName = location.state.playerName; 
+    const location = useLocation(); 
+    const playerName = location.state.playerName; 
     const [games, setGames] = useState([]); 
 
     const socket = io(ENDPOINT);
@@ -17,10 +18,22 @@ const ViewPage = () => {
     })
     console.log(games);
 
+    const noResults = (games.length === 0);
+
+    console.log(playerName);
+    const navigate = useNavigate();
+    const goBack = () => {
+        navigate(-1, playerName);
+    }
+
     return (
-        <div>
-            <h1>Past Games</h1>
-            <table>
+        <div >
+            <button aria-label="back button" onClick={goBack}>Back</button>
+            <h1 id="pastGamesResults">Past Games</h1>
+            {
+                noResults
+                ? <h3>No history of past games available. Try Refreshing.</h3>
+                :  <table aria-labelledby="pastGameResults">
                 <thead>
                     <tr>
                         <th>Outcome</th>
@@ -46,6 +59,7 @@ const ViewPage = () => {
                     })}
                 </tbody>
             </table>
+            }
         </div>
     );
 }

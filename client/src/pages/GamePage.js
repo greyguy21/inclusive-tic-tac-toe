@@ -9,7 +9,7 @@ const GamePage = () => {
 
     return (
         <div className="App">
-            <Board gameID={gameID} playerName={playerName}></Board>
+            <Board aria-label="game board" gameID={gameID} playerName={playerName}></Board>
             {/* Leave Game*/}
             {/* Play Again */}
         </div>

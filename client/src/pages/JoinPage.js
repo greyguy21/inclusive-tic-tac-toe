@@ -58,12 +58,12 @@ class JoinPageComponent extends React.Component {
             <div className="App">
             {this.state.error ?<h1>Game does not exist. Try Again.</h1> : <h1>Enter Your Game ID</h1>}
             <form onSubmit={(this.handleOnSubmit.bind(this))}>
-                <input type="text" onChange={this.handleOnChange.bind(this)}></input>
+                <input type="text" onChange={this.handleOnChange.bind(this)} aria-label="enter game id"></input>
                 <br></br>
                 <br></br>
                 <label>Then, click Join</label>
                 <br></br>
-                <button type="submit">Join</button>
+                <button type="submit" aria-label="join button">Join</button>
             </form>
             </div>
             ); 
