@@ -1,6 +1,6 @@
 import "../App.css";
 import React from "react";
-import Square from "./Square";
+// import Square from "./Square";
 import io from "socket.io-client";
 
 const ENDPOINT = 'http://localhost:4000/';
@@ -181,19 +181,19 @@ class Board extends React.Component {
                     <h1>{this.state.message}</h1>
                     {!this.state.end ? <h3>Your Piece is {this.state.piece}</h3> : null}
                     <div className="Row">{/*Row */}
-                        <Square index={0} value={this.state.board[0]} onClick={this.handleClickSquare.bind(this)}/>
-                        <Square index={1} value={this.state.board[1]} onClick={this.handleClickSquare.bind(this)}/>
-                        <Square index={2} value={this.state.board[2]} onClick={this.handleClickSquare.bind(this)}/>
+                        <button className="Square" onClick={this.handleClickSquare.bind(this, 0)}>{this.state.board[0]}</button>
+                        <button className="Square" onClick={this.handleClickSquare.bind(this, 1)}>{this.state.board[1]}</button>
+                        <button className="Square" onClick={this.handleClickSquare.bind(this, 2)}>{this.state.board[2]}</button>
                     </div>
                     <div className="Row">{/*Row */}
-                        <Square index={3} value={this.state.board[3]} onClick={this.handleClickSquare.bind(this)}/>
-                        <Square index={4} value={this.state.board[4]} onClick={this.handleClickSquare.bind(this)}/>
-                        <Square index={5} value={this.state.board[5]} onClick={this.handleClickSquare.bind(this)}/>               
+                        <button className="Square" onClick={this.handleClickSquare.bind(this, 3)}>{this.state.board[3]}</button>
+                        <button className="Square" onClick={this.handleClickSquare.bind(this, 4)}>{this.state.board[4]}</button>
+                        <button className="Square" onClick={this.handleClickSquare.bind(this, 5)}>{this.state.board[5]}</button>
                     </div>
                     <div className="Row">{/*Row */}
-                        <Square index={6} value={this.state.board[6]} onClick={this.handleClickSquare.bind(this)}/>
-                        <Square index={7} value={this.state.board[7]} onClick={this.handleClickSquare.bind(this)}/>
-                        <Square index={8} value={this.state.board[8]} onClick={this.handleClickSquare.bind(this)}/>
+                        <button className="Square" onClick={this.handleClickSquare.bind(this, 6)}>{this.state.board[6]}</button>
+                        <button className="Square" onClick={this.handleClickSquare.bind(this, 7)}>{this.state.board[7]}</button>
+                        <button className="Square" onClick={this.handleClickSquare.bind(this, 8)}>{this.state.board[8]}</button>
                     </div>        
                     {this.state.end ? <button type="submit" onClick={this.handlePlayAgain.bind(this)}>Play Again</button> : null}      
                 </div>
